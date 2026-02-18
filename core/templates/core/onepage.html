@@ -1,0 +1,38 @@
+{% extends 'base.html' %}   
+{% load static %}
+
+{% block titulo %}UTEZ - Universidad Tecnológica Emiliano Zapata{% endblock %}
+
+{% block contenido %}
+
+<div class="container my-5">
+    <div class="row" id="cursosContainer"></div>
+</div>
+
+<script src="{% static 'js/onePage.js' %}"></script>
+<script>
+    function renderizarCursos() {
+        const cursos = combinacion();
+        const container = document.getElementById('cursosContainer');
+
+        cursos.forEach(curso => {
+            const card = document.createElement('div');
+            card.className = 'col-md-6 col-lg-4 mb-4';
+            card.innerHTML = `
+                <div class="card h-100 shadow-sm">
+                    <img src="${curso.imagenes}" class="card-img-top" alt="${curso.titulos}" style="height: 200px; object-fit: cover; width: 100%;">
+                    <div class="card-body">
+                        <h5 class="card-title">${curso.titulos}</h5>
+                        <p class="card-text">${curso.descripcion}</p>
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+    
+    document.addEventListener('DOMContentLoaded', renderizarCursos);
+</script>
+
+{% endblock %}
+

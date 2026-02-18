@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Mi CV - Sitio UTEZ{% endblock %}
+
+{% block contenido %}
+<style>
+    .cv-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 40px 0;
+        margin-bottom: 40px;
+    }
+
+    .cv-header {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+
+    .cv-header h1 {
+        font-size: 3em;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .cv-header p {
+        font-size: 1.2em;
+        opacity: 0.9;
+    }
+
+    .avatar-container {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .avatar-img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 5px solid white;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    .cv-section {
+        background-color: #f8f9fa;
+        padding: 30px;
+        margin-bottom: 30px;
+        border-left: 5px solid #667eea;
+        border-radius: 5px;
+    }
+
+    .cv-section h2 {
+        color: #667eea;
+        font-weight: bold;
+        margin-bottom: 20px;
+        font-size: 1.8em;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 10px;
+    }
+
+    .info-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 15px;
+        padding: 10px 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .info-label {
+        font-weight: bold;
+        color: #667eea;
+        flex: 1;
+    }
+
+    .info-value {
+        flex: 2;
+        color: #333;
+    }
+
+    .languages-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .language-card {
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-top: 3px solid #667eea;
+    }
+
+    .language-card h5 {
+        color: #667eea;
+        margin-bottom: 8px;
+        font-weight: bold;
+    }
+
+    .language-card p {
+        margin: 0;
+        color: #555;
+        font-size: 0.95em;
+    }
+
+    .skill-tag {
+        display: inline-block;
+        background-color: #667eea;
+        color: white;
+        padding: 8px 15px;
+        margin: 5px 5px 5px 0;
+        border-radius: 20px;
+        font-size: 0.9em;
+    }
+</style>
+
+<div class="cv-container">
+    <div class="container">
+        <div class="avatar-container">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmMgO7YQRE-RavNnKIvDxqyueYfvKY9uMbZA&s" alt="Foto de perfil" class="avatar-img">
+        </div>
+        <div class="cv-header">
+            <h1>Angel Gustavo Ortuño Rogel</h1>
+            <p>Estudiante de Ingeniería en Desarrllo y Gestion Software</p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Sección de Información Personal -->
+    <div class="cv-section">
+        <h2>Información Personal</h2>
+        <div class="info-row">
+            <div class="info-label">Nombre Completo:</div>
+            <div class="info-value">Angel Gustavo Ortuño Rogel</div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Edad:</div>
+            <div class="info-value">20 años</div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Carrera:</div>
+            <div class="info-value">Ingeniería en Desarrllo y Gestion Software / Tecnologías de la Información</div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Grado:</div>
+            <div class="info-value">8 cuatrimestre</div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Grupo:</div>
+            <div class="info-value">B</div>
+        </div>
+        <div class="info-row">
+            <div class="info-label">Institución:</div>
+            <div class="info-value">Universidad Tecnológica de Emiliano Zapata (UTEZ)</div>
+        </div>
+    </div>
+
+    <!-- Sección de Lenguajes de Programación -->
+    <div class="cv-section">
+        <h2>Lenguajes de Programación</h2>
+        <div style="margin-top: 20px;">
+            <div style="margin-bottom: 20px;">
+                <h5 style="color: #667eea; margin-bottom: 10px;">Intermedio</h5>
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">JavaScript</span>
+                <span class="skill-tag">HTML5</span>
+                <span class="skill-tag">CSS3</span>
+                <span class="skill-tag">Java</span>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <h5 style="color: #667eea; margin-bottom: 10px;">Principiante</h5>
+                <span class="skill-tag">SQL</span>
+                <span class="skill-tag">Django</span>
+                <span class="skill-tag">React</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección de Lenguajes Hablados -->
+    <div class="cv-section">
+        <h2>Lenguajes Hablados</h2>
+        <div class="languages-grid">
+            <div class="language-card">
+                <h5>Español</h5>
+                <p><strong>Nivel:</strong> Nativo / Fluido</p>
+                <p>Lengua materna</p>
+            </div>
+            <div class="language-card">
+                <h5>Inglés</h5>
+                <p><strong>Nivel:</strong> A2 intermedio</p>
+                <p>Lectura y escritura fluida</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

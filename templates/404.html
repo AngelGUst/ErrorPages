@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 404 - Página no encontrada</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <main role="main" style="display: flex; align-items: center; justify-content: center; height: 100vh; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); margin: 0;">
+        <div style="max-width: 420px; padding: 1.5rem; border-radius: 16px; background: rgba(255, 255, 255, 0.95); text-align: center; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);">
+            
+            <div style="width: 140px; height: 140px; margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center;">
+                <span class="material-icons" style="font-size: 120px; color: #f5576c;">search_off</span>
+            </div>
+            
+            <h1 style="color: #f5576c; font-size: 2rem; margin: 0 0 0.25rem 0;">¡Oops! Error 404</h1>
+            
+            <p style="color: #666; font-size: 0.95rem; margin-bottom: 1rem;">La página que buscas se ha perdido en el espacio digital.</p>
+
+            <div style="margin-bottom: 1rem;">
+                <form method="get" action="/search/" style="display: flex; gap: 0.5rem;">
+                    <input type="text" name="q" placeholder="¿Qué buscas?" style="flex: 1; padding: 0.6rem; border: 2px solid #f5576c; border-radius: 6px; font-size: 0.9rem;">
+                    <button type="submit" style="padding: 0.6rem 1rem; background: #f5576c; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 0.85rem;">Buscar</button>
+                </form>
+            </div>
+
+            <div style="margin: 1rem 0; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+                <a href="/" style="display:inline-block; padding:0.6rem 1.25rem; border-radius:6px; background:#f5576c; color:#fff; text-decoration:none; font-weight:bold; font-size:0.9rem;">Ir al inicio</a>
+            </div>
+
+            <div style="margin: 1rem 0; padding: 0.75rem 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
+                <h3 style="color: #333; font-size: 0.85rem; margin: 0 0 0.5rem 0;">Sugerencias:</h3>
+                <ul style="list-style: none; padding: 0; color: #666; font-size: 0.8rem; margin: 0;">
+                    <li>✓ Verifica que la URL sea correcta</li>
+                    <li>✓ Intenta buscar lo que necesitas</li>
+                </ul>
+            </div>
+
+            <p style="margin-top: 0.75rem; font-size:0.75rem; color:#999;">
+                ¿Necesitas ayuda? <a href="mailto:soporte@ejemplo.com" style="color:#f5576c; text-decoration:none; font-weight:bold;">Contáctanos</a>
+            </p>
+
+            <div style="margin: 1rem 0; display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+                <a href="/error" style="display:inline-block; padding:0.6rem 1.25rem; border-radius:6px; background:#f5576c; color:#fff; text-decoration:none; font-weight:bold; font-size:0.9rem;">Búsqueda avanzada</a>
+            </div>
+
+        </div>
+    </main>
+</body>
+</html>
