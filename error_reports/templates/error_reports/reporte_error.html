@@ -1,0 +1,228 @@
+{% extends 'base.html' %}
+
+{% block titulo %}Reportes de Error{% endblock %}
+
+{% block contenido %}
+<div class="container mt-4">
+    <h1 class="mb-4">Sistema de Reportes de Error</h1>
+    
+    <!-- Mensaje de éxito -->
+    <div id="mensajeExito" class="alert alert-success d-none" role="alert">
+        ¡Reporte registrado exitosamente!
+    </div>
+    
+    <!-- Mensajes de error -->
+    <div id="mensajeError" class="alert alert-danger d-none" role="alert">
+        <strong>Error:</strong> <span id="textoError"></span>
+        <ul id="listaErrores"></ul>
+    </div>
+    
+    <!-- Formulario de Reporte -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h3>Nuevo Reporte de Error</h3>
+        </div>
+        <div class="card-body">
+            <form id="errorReportForm">
+                {% csrf_token %}
+                
+                <div class="mb-3">
+                    <label for="id_titulo" class="form-label">Título</label>
+                    {{ form.titulo }}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="id_descripcion" class="form-label">Descripción</label>
+                    {{ form.descripcion }}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="id_tipo_error" class="form-label">Tipo de Error</label>
+                    {{ form.tipo_error }}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="id_url" class="form-label">URL</label>
+                    {{ form.url }}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="id_metodo_http" class="form-label">Método HTTP</label>
+                    {{ form.metodo_http }}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="id_ip_cliente" class="form-label">IP Cliente (Opcional)</label>
+                    {{ form.ip_cliente }}
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Enviar Reporte</button>
+                <button type="reset" class="btn btn-secondary">Limpiar</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Listado de Reportes -->
+    <div class="card">
+        <div class="card-header bg-secondary text-white">
+            <h3>Reportes Registrados</h3>
+        </div>
+        <div class="card-body">
+            <div id="reportesList" class="row">
+                <p class="text-center">Cargando reportes...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control, .form-select {
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        padding: 0.375rem 0.75rem;
+    }
+    
+    textarea.form-control {
+        min-height: 100px;
+    }
+    
+    .reporte-card {
+        margin-bottom: 1rem;
+    }
+    
+    .error-400 {
+        background-color: #fff3cd !important;
+        border-left: 4px solid #ffc107;
+    }
+    
+    .error-500 {
+        background-color: #f8d7da !important;
+        border-left: 4px solid #dc3545;
+    }
+</style>
+
+<script>
+    // Cargar reportes al iniciar la página
+    document.addEventListener('DOMContentLoaded', function() {
+        cargarReportes();
+        
+        // Agregar clases de Bootstrap a los campos del formulario
+        document.querySelectorAll('input[type="text"], input[type="url"], input[type="number"], textarea, select').forEach(function(element) {
+            element.classList.add('form-control');
+        });
+    });
+    
+    // Función para cargar reportes desde el servidor
+    function cargarReportes() {
+        fetch('/obtener-reportes/')
+            .then(response => response.json())
+            .then(data => {
+                const reportesList = document.getElementById('reportesList');
+                reportesList.innerHTML = '';
+                
+                if (data.status === 'ok' && data.reportes.length > 0) {
+                    data.reportes.forEach(reporte => {
+                        const tipoError = reporte.tipo_error.toString();
+                        let colorClass = '';
+                        
+                        // Determinar color según tipo de error
+                        if (tipoError.startsWith('4')) {
+                            colorClass = 'error-400';
+                        } else if (tipoError.startsWith('5')) {
+                            colorClass = 'error-500';
+                        }
+                        
+                        const fecha = new Date(reporte.fecha_reporte).toLocaleString('es-MX');
+                        
+                        const reporteCard = `
+                            <div class="col-md-6 col-lg-4 reporte-card">
+                                <div class="card ${colorClass}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${reporte.titulo}</h5>
+                                        <p class="card-text"><strong>Descripción:</strong> ${reporte.descripcion}</p>
+                                        <p class="card-text"><strong>Tipo:</strong> ${reporte.tipo_error}</p>
+                                        <p class="card-text"><strong>URL:</strong> <a href="${reporte.url}" target="_blank">${reporte.url}</a></p>
+                                        <p class="card-text"><strong>Método HTTP:</strong> ${reporte.metodo_http}</p>
+                                        ${reporte.ip_cliente ? `<p class="card-text"><strong>IP:</strong> ${reporte.ip_cliente}</p>` : ''}
+                                        <p class="card-text"><small class="text-muted">Fecha: ${fecha}</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        reportesList.innerHTML += reporteCard;
+                    });
+                } else {
+                    reportesList.innerHTML = '<p class="text-center">No hay reportes registrados.</p>';
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar reportes:', error);
+                document.getElementById('reportesList').innerHTML = '<p class="text-center text-danger">Error al cargar reportes.</p>';
+            });
+    }
+    
+    // Manejar envío del formulario
+    document.getElementById('errorReportForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Ocultar mensajes previos
+        document.getElementById('mensajeExito').classList.add('d-none');
+        document.getElementById('mensajeError').classList.add('d-none');
+        
+        // Obtener datos del formulario
+        const formData = new FormData(this);
+        
+        // Enviar datos mediante fetch
+        fetch('/reportes-error/', {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                // Mostrar mensaje de éxito
+                document.getElementById('mensajeExito').classList.remove('d-none');
+                
+                // Limpiar formulario
+                document.getElementById('errorReportForm').reset();
+                
+                // Recargar reportes
+                cargarReportes();
+                
+                // Ocultar mensaje después de 3 segundos
+                setTimeout(() => {
+                    document.getElementById('mensajeExito').classList.add('d-none');
+                }, 3000);
+            } else {
+                // Mostrar mensaje de error
+                document.getElementById('textoError').textContent = data.mensaje;
+                
+                // Mostrar errores específicos del formulario
+                const listaErrores = document.getElementById('listaErrores');
+                listaErrores.innerHTML = '';
+                
+                if (data.errors) {
+                    for (const [campo, errores] of Object.entries(data.errors)) {
+                        errores.forEach(error => {
+                            const li = document.createElement('li');
+                            li.textContent = `${campo}: ${error}`;
+                            listaErrores.appendChild(li);
+                        });
+                    }
+                }
+                
+                document.getElementById('mensajeError').classList.remove('d-none');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('textoError').textContent = 'Error de conexión con el servidor';
+            document.getElementById('mensajeError').classList.remove('d-none');
+        });
+    });
+</script>
+{% endblock %}

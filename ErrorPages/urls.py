@@ -1,6 +1,7 @@
 from django.urls import path
 from ErrorPages import views
 from core import views as core_views
+from error_reports import views as error_views
 
 def trigger_error(request):
     raise Exception("Error intencioal para Error 500.")
@@ -10,7 +11,9 @@ urlpatterns = [
     path('onepage/', core_views.onepage, name='onepage'),
     path('cv/', core_views.cv, name='cv'),
     path('error/', trigger_error),  # This path is just for testing error pages
-    path('formulario/', core_views.contacto_view, name="formulario")
+    path('formulario/', core_views.contacto_view, name="formulario"),
+    path('reportes-error/', error_views.reporte_error_view, name='reportes_error'),
+    path('obtener-reportes/', error_views.obtener_reportes_view, name='obtener_reportes'),
 ]
 
 # Handlers de error

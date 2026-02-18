@@ -43,6 +43,16 @@
                             href="{%  url 'cv'%}">CV</a>
                     </li>
 
+                    <li>
+                        <a class="nav-link {% if url_actual == 'reportes_error' %}active{% endif %}"
+                            href="{%  url 'reportes_error'%}">Reportar Error</a>
+                    </li>
+
+                    <li>
+                        <a class="nav-link {% if url_actual == 'formulario' %}active{% endif %}"
+                            href="{%  url 'formulario'%}">Formulario</a>
+                    </li>
+
                     {% endwith %}
                 </ul>
             </div>
