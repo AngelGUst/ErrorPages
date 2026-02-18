@@ -8,4 +8,6 @@ class ErrorReport(models.Model):
     tipo_error = models.CharField(blank=False, null=False)
     url = models.URLField
     metodo_http = models.CharField(max_length=10)
-    
+    ip_cliente = models.GenericIPAddressField(blank=True, null=True)
+    fecha_reporte = models.DateTimeField(auto_now_add=True)
+    activo = models.BooleanField(default=True)
